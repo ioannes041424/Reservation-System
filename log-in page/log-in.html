@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="container">
+        <h1>Welcome</h1>
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('login')">Login</button>
+            <button class="tab" onclick="showTab('signup')">Sign Up</button>
+        </div>
+        
+        <!-- Admin login text, initially hidden -->
+        <p class="admin-login-text" style="display: none;">Logging-in as Admin</p>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-identifier">Name or Email</label>
+                <input type="text" id="login-identifier" required>
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" required>
+                <span class="password-toggle">👁️</span>
+                <div class="error-message"></div>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+            <div class="error-message"></div>
+            <div class="success-message"></div>
+        </form>
+        
+        <form id="signup-form" style="display: none;">
+            <div class="form-group">
+                <label for="signup-name">Name</label>
+                <input type="text" id="signup-name" required>
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" required>
+                <div class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" required>
+                <span class="password-toggle">👁️</span>
+                <div class="error-message"></div>
+            </div>
+            <button type="submit" class="submit-btn">Sign Up</button>
+            <div class="error-message"></div>
+            <div class="success-message"></div>
+        </form>
+        
+        <button class="google-btn">
+            <!-- The button will be rendered by Google's library -->
+        </button>
+    </div>
+    
+    <a href="#" onclick="loginAsAdmin()" class="admin-login">Login as Admin</a>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
