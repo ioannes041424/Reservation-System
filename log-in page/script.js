@@ -1,8 +1,30 @@
+// Kini nga mga import gikan sa Firebase kay importante para ma-authenticate ang users
+// ug ma-connect ta sa Firebase services
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+// Kini ang configuration sa Firebase. Importante ni nga information para ma-connect
+// ang atong application sa Firebase project
+const firebaseConfig = {
+    apiKey: "AIzaSyBedLr4v6xdXWydp3mg44XGxNVzlpebJk4",
+    authDomain: "reservation-system-login.firebaseapp.com",
+    projectId: "reservation-system-login",
+    storageBucket: "reservation-system-login.firebasestorage.app",
+    messagingSenderId: "877920417271",
+    appId: "1:877920417271:web:6ae2dbe8c0cca855fdeaf2"
+};
+
+// Kini ang pag-setup sa Firebase ug authentication services
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+// Maghulat ta nga ma-load ang HTML sa dili pa mag-start ang JavaScript code
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     
-    // Form submission handlers
+    // Kini ang mag-handle sa login form submission
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const identifier = loginForm.querySelector('#login-identifier').value;
@@ -10,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const successMessage = loginForm.querySelector('.success-message');
         const errorDiv = loginForm.querySelector('.error-message');
         
-        // Check for admin login
+        // I-check kung admin ba ang nag-login
         if (identifier === 'admin' && password === 'admin') {
             successMessage.textContent = 'Admin login successful! Redirecting...';
             successMessage.style.display = 'block';
@@ -21,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Retrieve stored users
+        // Kuhaon ang mga users gikan sa localStorage
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const user = users.find(user => (user.name === identifier || user.email === identifier) && user.password === password);
         
@@ -39,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // Kini ang mag-handle sa signup form submission
     signupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!validateForm(signupForm)) return;
@@ -47,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = signupForm.querySelector('#signup-email').value;
         const password = signupForm.querySelector('#signup-password').value;
         
-        // Retrieve existing users and add new user
+        // I-save ang bag-ong user sa localStorage
         const users = JSON.parse(localStorage.getItem('users')) || [];
         users.push({ name, email, password });
         localStorage.setItem('users', JSON.stringify(users));
@@ -61,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     });
     
-    // Password visibility toggle
+    // Kini ang feature nga maka-toggle sa password visibility
     document.querySelectorAll('.password-toggle').forEach(toggle => {
         toggle.addEventListener('click', () => {
             const input = toggle.previousElementSibling;
@@ -69,9 +92,47 @@ document.addEventListener('DOMContentLoaded', () => {
             toggle.textContent = input.type === 'password' ? '👁️' : '👁️‍🗨️';
         });
     });
+
+    // Kini ang setup sa Google Sign-in feature
+    function initializeGoogleSignIn() {
+        const googleBtn = document.querySelector('.custom-google-btn');
+        googleBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                // I-save ang user data sa localStorage kung kinahanglan
+                localStorage.setItem('googleUser', JSON.stringify({
+                    name: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL
+                }));
+
+                // Ipakita ang success message
+                const successMessage = document.querySelector('#login-form .success-message');
+                successMessage.textContent = 'Google login successful! Redirecting...';
+                successMessage.style.display = 'block';
+                
+                // I-redirect human sa successful login
+                setTimeout(() => {
+                    window.location.href = 'welcome.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error during Google sign-in:', error);
+                const errorDiv = document.querySelector('#login-form .error-message');
+                errorDiv.textContent = 'Failed to login with Google';
+                errorDiv.style.display = 'block';
+            }
+        });
+    }
+
+    initializeGoogleSignIn();
 });
 
-// Form validation helper (only for regular users and signup)
+// Kini nga function kay mag-check kung valid ba ang form inputs
 function validateForm(form) {
     let isValid = true;
     const inputs = form.querySelectorAll('input[required]');
@@ -98,29 +159,27 @@ function validateForm(form) {
     return isValid;
 }
 
+// Kini nga function kay mag-check kung valid ba ang email format
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Tab switching
+// Kini ang mag-switch sa forms between login ug signup
 function showTab(tabName) {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
     const adminLoginText = document.querySelector('.admin-login-text');
     
-    // Hide both forms
     loginForm.style.display = 'none';
     signupForm.style.display = 'none';
     
-    // Show selected form
     if (tabName === 'login') {
         loginForm.style.display = 'block';
     } else {
         signupForm.style.display = 'block';
-        adminLoginText.style.display = 'none'; // Hide admin login text when switching to signup
+        adminLoginText.style.display = 'none';
     }
     
-    // Update tab styling
     document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
     });
@@ -128,62 +187,14 @@ function showTab(tabName) {
     activeTab.classList.add('active');
 }
 
-// Admin login handler - just switches to login tab
+// Kini ang special function para sa admin login
 function loginAsAdmin() {
     showTab('login');
     const adminLoginText = document.querySelector('.admin-login-text');
-    adminLoginText.style.display = 'block'; // Show the admin login text
+    adminLoginText.style.display = 'block'; 
 }
 
-// Expose necessary functions to window
+// Gi-expose nato ning mga functions sa window object para magamit sa HTML
 window.showTab = showTab;
 window.loginAsAdmin = loginAsAdmin;
-
-function printAllUsers() {
-    // Retrieve the users from localStorage
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    
-    // Log each user to the console
-    users.forEach(user => {
-        console.log(`Name: ${user.name}, Email: ${user.email}`);
-    });
-}
-
-// Call the function to print all users
-printAllUsers();
-
-function handleCredentialResponse(response) {
-    const data = jwt_decode(response.credential);
-    console.log("ID: " + data.sub);
-    console.log('Full Name: ' + data.name);
-    console.log('Given Name: ' + data.given_name);
-    console.log('Family Name: ' + data.family_name);
-    console.log("Image URL: " + data.picture);
-    console.log("Email: " + data.email);
-
-    // Here you can handle the user data, e.g., send it to your server
-    // or store it in localStorage
-    const successMessage = document.querySelector('.success-message');
-    successMessage.textContent = 'Google login successful! Redirecting...';
-    successMessage.style.display = 'block';
-
-    setTimeout(() => {
-        window.location.href = 'welcome.html';
-    }, 1500);
-}
-
-// Initialize the Google Sign-In button
-window.onload = function () {
-    google.accounts.id.initialize({
-        client_id: '132072170455-0as6fhmn49ahqetbss07829mag18l1q9.apps.googleusercontent.com', // Ensure this is correct
-        callback: handleCredentialResponse
-    });
-
-    google.accounts.id.renderButton(
-        document.querySelector('.google-btn'), // Ensure this element exists
-        { theme: 'outline', size: 'large' } // Customization options
-    );
-
-    google.accounts.id.prompt(); // Display the One Tap prompt
-};
 

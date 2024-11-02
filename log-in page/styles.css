@@ -1,3 +1,5 @@
+/* Kini ang root variables nga gamiton sa tibuok CSS file para sa mga colors ug transitions */
+/*bali variables rani sila na pwede ninyo ma access or ma change*/
 :root {
     --primary-color: #800000;
     --secondary-color: #982B1C;
@@ -7,12 +9,14 @@
     --transition: all 0.3s ease;
 }
 
+/* Kini ang reset sa tanang default margins, paddings ug box sizing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Kini ang style sa entire body sa webpage. Naa ni gradient background ug centered content */
 body {
     font-family: 'Poppins', Arial, sans-serif;
     background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
@@ -25,6 +29,7 @@ body {
     align-items: center;
 }
 
+/* Kini ang main container sa form. Naa ni glass-like effect nga background */
 .container {
     background: rgba(255, 255, 255, 0.9);
     border-radius: 20px;
@@ -37,6 +42,7 @@ body {
     margin-top: 20px;
 }
 
+/* Style sa logo nga naa sa top-right corner. Mag zoom in gamay kung i-hover */
 .logo {
     position: fixed;
     top: 20px;
@@ -47,10 +53,12 @@ body {
     z-index: 1000;
 }
 
+/* Animation effect kung i-hover ang logo */
 .logo:hover {
     transform: scale(1.05);
 }
 
+/* Style sa heading (title) sa form */
 h1 {
     color: var(--primary-color);
     text-align: center;
@@ -59,6 +67,7 @@ h1 {
     font-weight: 600;
 }
 
+/* Kini ang container sa login/signup tabs */
 .tabs {
     display: flex;
     margin: 0 auto 30px;
@@ -69,6 +78,7 @@ h1 {
     border: none;
 }
 
+/* Kini ang style sa matag tab button */
 .tab {
     flex: 1;
     padding: 12px 25px;
@@ -83,23 +93,30 @@ h1 {
     position: relative;
     margin: 0 5px;
     border-radius: 8px;
+
+   
 }
 
+/* Style kung active/selected ang tab */
 .tab.active {
     background: var(--primary-color);
     color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Hover effect sa dili active nga tabs */
 .tab:not(.active):hover {
     background: rgba(128, 0, 0, 0.1);
 }
 
+
+/* Container para sa input fields ug labels */
 .form-group {
     margin-bottom: 20px;
     position: relative;
 }
 
+/* Style sa labels sa form */
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -107,6 +124,7 @@ h1 {
     font-weight: 500;
 }
 
+/* Style sa input fields */
 .form-group input {
     width: 100%;
     padding: 12px;
@@ -117,12 +135,14 @@ h1 {
     background: white;
 }
 
+/* Effect kung i-click ang input field */
 .form-group input:focus {
     border-color: var(--primary-color);
     outline: none;
     box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
 }
 
+/* Default style sa tanang buttons */
 button {
     width: 100%;
     padding: 14px;
@@ -135,36 +155,47 @@ button {
     margin-bottom: 15px;
 }
 
+/* Style sa submit button */
 .submit-btn {
     background: var(--primary-color);
     color: white;
 }
 
+/* Hover effect sa submit button */
 .submit-btn:hover {
     background: var(--secondary-color);
     transform: translateY(-2px);
 }
 
+/* Style sa Google sign-in button */
 .google-btn {
     background: white;
     color: var(--text-color);
-    border: 2px solid #ddd;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: var(--transition);
 }
 
+/* Hover effect sa Google button */
 .google-btn:hover {
     background: #f8f8f8;
-    border-color: #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* Style sa Google icon */
 .google-btn img {
     width: 20px;
     height: 20px;
 }
 
+/* Style sa error messages */
 .error-message {
     color: #ff3333;
     font-size: 14px;
@@ -172,6 +203,7 @@ button {
     display: none;
 }
 
+/* Style sa success messages */
 .success-message {
     color: #28a745;
     font-size: 14px;
@@ -179,6 +211,7 @@ button {
     display: none;
 }
 
+/* Style sa eye icon para sa password */
 .password-toggle {
     position: absolute;
     right: 12px;
@@ -187,10 +220,12 @@ button {
     color: #666;
 }
 
+/* Kini ang animation kung mag load ang form */
 .form-animation {
     animation: slideIn 0.3s ease;
 }
 
+/* Kini ang keyframes para sa sliding animation */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -202,11 +237,13 @@ button {
     }
 }
 
+/* Loading spinner effect kung nag process pa ang form */
 .loading {
     position: relative;
     pointer-events: none;
 }
 
+/* Kini ang spinning circle animation para sa loading state */
 .loading::after {
     content: "";
     position: absolute;
@@ -221,12 +258,14 @@ button {
     animation: spin 0.8s linear infinite;
 }
 
+/* Animation para sa loading spinner */
 @keyframes spin {
     to {
         transform: rotate(360deg);
     }
 }
 
+/* Style sa admin login link */
 .admin-login {
     position: fixed;
     bottom: 20px;
@@ -238,11 +277,13 @@ button {
     z-index: 1000;
 }
 
+/* Hover effect sa admin link */
 .admin-login:hover {
     color: var(--bg-secondary);
     text-decoration: underline;
 }
 
+/* Responsive design para sa medium screens */
 @media (max-width: 768px) {
     body {
         padding: 15px;
@@ -269,6 +310,7 @@ button {
     }
 }
 
+/* Responsive design para sa mobile devices */
 @media (max-width: 480px) {
     body {
         padding: 10px;
@@ -306,6 +348,7 @@ button {
     }
 }
 
+/* Responsive design para sa pinaka-gamay nga screens */
 @media (max-width: 320px) {
     .container {
         padding: 15px;
@@ -323,34 +366,10 @@ button {
     }
 }
 
-/* Update tab styles */
-.tab {
-    flex: 1;
-    padding: 12px 25px;
-    background: transparent;
-    color: var(--primary-color);
-    cursor: pointer;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: var(--transition);
-    position: relative;
-    margin: 0 5px;
-    border-radius: 8px;
-}
 
-.tab.active {
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.tab:not(.active):hover {
-    background: rgba(128, 0, 0, 0.1);
-}
 
-/* Minimize signup form spacing */
+/* Mga adjustments para sa signup form spacing */
 #signup-form .form-group {
     margin-bottom: 10px;
 }
@@ -367,6 +386,7 @@ button {
     top: 35px;
 }
 
+/* Style sa admin login text */
 .admin-login-text {
     color: var(--primary-color);
     font-size: 14px;
@@ -374,4 +394,35 @@ button {
     margin-top: 10px;
     display: none;
     transition: var(--transition);
+}
+
+/* Custom style sa Google button */
+.custom-google-btn {
+    background: white;
+    color: #333;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 15.2px;
+    font-weight: 600;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+/* Hover effect sa custom Google button */
+.custom-google-btn:hover {
+    background: #f8f8f8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Style sa Google logo */
+.google-logo {
+    width: 24px;
+    height: 24px;
 }
