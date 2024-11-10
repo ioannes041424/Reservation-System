@@ -1,4 +1,4 @@
-// Kini nga mga import gikan sa Firebase kay importante para ma-authenticate ang users
+// Kini nga import gikan sa Firebase kay importante para ma-authenticate ang users
 // ug ma-connect ta sa Firebase services
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         successMessage.style.display = 'block';
         errorDiv.style.display = 'none';
         setTimeout(() => {
-            window.location.href = 'welcome.html';
+            window.location.href = '../homepage/index.html'; // Redirect to homepage
         }, 1500);
         return;
     }
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             successMessage.style.display = 'block';
             errorDiv.style.display = 'none';
             setTimeout(() => {
-                window.location.href = 'welcome.html'; // Redirect to welcome page
+                window.location.href = '../homepage/index.html'; // Redirect to homepage
             }, 1500);
         } else {
             const errorMessage = await response.json();
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // I-redirect human sa successful login
                 setTimeout(() => {
-                    window.location.href = 'welcome.html';
+                    window.location.href = '../homepage/index.html'; // Redirect to homepage
                 }, 1500);
 
             } catch (error) {
