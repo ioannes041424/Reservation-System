@@ -19,11 +19,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+// Add a variable to track if admin login is active
+let isAdminLogin = false;
+
 // Maghulat ta nga ma-load ang HTML sa dili pa mag-start ang JavaScript code
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
-    
+
    // Kini ang mag-handle sa login form submission
    loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -31,18 +34,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = loginForm.querySelector('#login-password').value;
     const successMessage = loginForm.querySelector('.success-message');
     const errorDiv = loginForm.querySelector('.error-message');
-    
-    // I-check kung admin ba ang nag-login
-    if (identifier === 'admin' && password === 'admin') {
-        successMessage.textContent = 'Admin login successful! Redirecting...';
-        successMessage.style.display = 'block';
-        errorDiv.style.display = 'none';
-        setTimeout(() => {
-            window.location.href = '../homepage/index.html'; // Redirect to homepage
-        }, 1500);
-        return;
+
+    // Check if admin login is active
+    if (isAdminLogin) {
+        if (identifier === 'admin' && password === 'admin') {
+            successMessage.textContent = 'Admin login successful! Redirecting...';
+            successMessage.style.display = 'block';
+            errorDiv.style.display = 'none';
+            setTimeout(() => {
+                window.location.href = '../homepage/index.html'; // Redirect to homepage
+            }, 1500);
+            return;
+        } else {
+            errorDiv.textContent = 'Invalid admin credentials';
+            errorDiv.style.display = 'block';
+            successMessage.style.display = 'none';
+            return;
+        }
     }
 
+    // Regular login logic for students
     try {
         // Send login request to the server
         const response = await fetch("http://localhost:3001/api/signin", {
@@ -142,11 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const googleBtn = document.querySelector('.custom-google-btn');
         googleBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            
+
             try {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
-                
+
                 // I-save ang user data sa localStorage kung kinahanglan
                 localStorage.setItem('googleUser', JSON.stringify({
                     name: user.displayName,
@@ -158,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const successMessage = document.querySelector('#login-form .success-message');
                 successMessage.textContent = 'Google login successful! Redirecting...';
                 successMessage.style.display = 'block';
-                
+
                 // I-redirect human sa successful login
                 setTimeout(() => {
                     window.location.href = '../homepage/index.html'; // Redirect to homepage
@@ -180,11 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function validateForm(form) {
     let isValid = true;
     const inputs = form.querySelectorAll('input[required]');
-    
+
     inputs.forEach(input => {
         const errorDiv = input.parentElement.querySelector('.error-message');
         errorDiv.style.display = 'none';
-        
+
         if (!input.value.trim()) {
             errorDiv.textContent = 'This field is required';
             errorDiv.style.display = 'block';
@@ -199,7 +210,7 @@ function validateForm(form) {
             isValid = false;
         }
     });
-    
+
     return isValid;
 }
 
@@ -219,6 +230,7 @@ function showTab(tabName) {
     
     if (tabName === 'login') {
         loginForm.style.display = 'block';
+        adminLoginText.style.display = isAdminLogin ? 'block' : 'none';
     } else {
         signupForm.style.display = 'block';
         adminLoginText.style.display = 'none';
@@ -231,14 +243,32 @@ function showTab(tabName) {
     activeTab.classList.add('active');
 }
 
-// Kini ang special function para sa admin login
-function loginAsAdmin() {
-    showTab('login');
+function toggleAdminLogin() {
     const adminLoginText = document.querySelector('.admin-login-text');
-    adminLoginText.style.display = 'block'; 
+    const adminLoginLink = document.querySelector('.admin-login');
+    
+    isAdminLogin = !isAdminLogin; // Toggle the state
+    
+    // Update UI elements
+    adminLoginLink.textContent = isAdminLogin ? 'Login as Student' : 'Login as Admin';
+    adminLoginText.style.display = isAdminLogin ? 'block' : 'none';
+    
+    // Clear form fields
+    document.getElementById('login-identifier').value = '';
+    document.getElementById('login-password').value = '';
+    
+    showTab('login');
 }
 
-// Gi-expose nato ning mga functions sa window object para magamit sa HTML
-window.showTab = showTab;
-window.loginAsAdmin = loginAsAdmin;
+// Single event listener for admin login functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const adminLoginLink = document.querySelector('.admin-login');
+    adminLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleAdminLogin();
+    });
+});
 
+// Expose functions to window object
+window.showTab = showTab;
+window.toggleAdminLogin = toggleAdminLogin;
