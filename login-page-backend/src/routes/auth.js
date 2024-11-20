@@ -5,7 +5,7 @@ const {
   isRequestValidated,
   validateSignUpRequest,
   validateSignInRequest, 
-} = require("../middleware/auth");  // Correctly importing from middleware
+} = require("../middleware/auth");  
 
 // Sign-up route
 router.route("/signup").post(validateSignUpRequest, isRequestValidated, signUp);

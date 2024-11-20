@@ -19,7 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Add a variable to track if admin login is active
+// track sa login as admin
 let isAdminLogin = false;
 
 // Maghulat ta nga ma-load ang HTML sa dili pa mag-start ang JavaScript code

@@ -7,7 +7,7 @@ const validateSignUpRequest = [
   check("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
 ];
 
-// Validation rules for sign-in (fixed typo here)
+// Validation rules for sign-in 
 const validateSignInRequest = [
   check("email").isEmail().withMessage("Valid Email required"),
   check("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),

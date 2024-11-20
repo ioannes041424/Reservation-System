@@ -32,4 +32,4 @@ userSchema.method({
   },
 });
 
-module.exports = mongoose.model("Student", userSchema);  // Make sure this is correct
+module.exports = mongoose.model("Student", userSchema);  

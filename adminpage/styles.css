@@ -1,0 +1,166 @@
+/* Kani ang mga default colors nga gigamit sa system */
+:root {
+    --primary-color: #800000;
+    --secondary-color: #b22222;
+    --accent-color: #d3d3d3;
+    --text-color: #ffffff;
+    --background-color: #ffffff;
+}
+
+/* Reset sa tanan default margins ug padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Default font ug background sa tibuok website */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Design sa header nga naa sa taas */
+header {
+    background: var(--primary-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 100px;
+}
+
+/* Design sa logo sa system */
+.logo img {
+    height: 90px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Design sa navigation menu */
+nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Lista sa navigation links */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
+}
+
+/* Design sa mga links sa navigation */
+nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+/* Hover effect sa navigation links */
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Design sa left panel nga naay navigation menu */
+.left-panel {
+    width: 250px;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    padding: 1rem;
+    margin-left: 2px;
+}
+
+/* Design sa navigation menu sa left panel */
+.nav-menu {
+    padding: 1rem;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu ul li {
+    margin-bottom: 1rem;
+}
+
+.nav-menu ul li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+/* Hover effect sa navigation links sa left panel */
+.nav-menu ul li a:hover {
+    background-color: rgba(128, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Design sa top bar sa dashboard */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Design sa notification icon sa top bar */
+.notification-icon {
+    margin-right: 1rem;
+}
+
+/* Design sa message icon sa top bar */
+.message-icon {
+    margin-right: 1rem;
+}
+
+/* Design sa dashboard content */
+.dashboard-content {
+    padding: 1rem;
+}
+
+/* Design sa table sa dashboard content */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+th {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ... (rest of the file remains the same) */

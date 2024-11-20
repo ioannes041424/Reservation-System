@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="../log-in-page/logo.png">
+</head>
+<body>
+    <div class="left-panel">
+        <div class="logo">
+            <img src="../log-in-page/logo.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#rooms">Rooms</a></li>
+                <li><a href="#users">Users</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content-container">
+        <div class="top-bar">
+            <div class="notification-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="message-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <h1>Registered Students</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- display registered students here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
