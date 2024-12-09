@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             successMessage.style.display = 'block';
             errorDiv.style.display = 'none';
             setTimeout(() => {
-                window.location.href = '../homepage/index.html'; // Redirect to homepage
+                window.location.href = '../adminpage/index.html'; // Redirect to homepage
             }, 1500);
             return;
         } else {
