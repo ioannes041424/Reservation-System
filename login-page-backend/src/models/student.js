@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isGoogleAccount: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting Room Reservation - Reserved Rooms</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../log-in-page/logo.png">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../log-in-page/logo.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../homepage/index.html">Home</a></li>
+                <li><a href="#rooms">Rooms</a></li>
+                <li><a href="../log-in-page/log-in.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <h1>Reserved Meeting Rooms</h1>
+
+        <!-- Container for the rooms -->
+        <div class="room-container">
+            <!-- Room 1: Conference Room A -->
+            <div class="room-card" id="room1">
+                <h2>Conference Room A</h2>
+                <div class="reservation-details">
+                    <ul id="room1-details">
+                        <!-- If no reservation, show the "No Reservations" sign -->
+                        <p class="no-reservation">No reservations for this room.</p>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Room 2: Conference Room B -->
+            <div class="room-card" id="room2">
+                <h2>Conference Room B</h2>
+                <div class="reservation-details">
+                    <ul id="room2-details">
+                        <!-- If no reservation, show the "No Reservations" sign -->
+                        <p class="no-reservation">No reservations for this room.</p>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

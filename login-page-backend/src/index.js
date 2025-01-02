@@ -4,10 +4,14 @@ const connectDB = require("./db/connect");
 const app = express();
 var cors = require("cors");
 const authRouter = require("./routes/auth");
+const studentsRouter = require("./routes/students");
+const Student = require("./models/student");
 
 app.use(cors());
 app.use(express.json());
 app.use("/api", authRouter);
+app.use("/api", studentsRouter);
+
 
 // Port and Connect to DB
 const port = process.env.PORT || 3001;

@@ -93,4 +93,54 @@ const signIn = async (req, res) => {
   }
 };
 
-module.exports = { signUp, signIn };
+const googleSignIn =  async (req, res) => {
+  try {
+      const { name, email } = req.body;
+
+      // Check if student already exists
+      let student = await Student.findOne({ email });
+
+      if (student) {
+          // If student exists, generate token
+          const token = jwt.sign({ _id: student._id }, process.env.JWT_SECRET, {
+              expiresIn: "1d",
+          });
+
+          const { hash_password, ...studentData } = student.toObject();
+          return res.json({
+              token,
+              student: studentData,
+          });
+      }
+
+      // If student doesn't exist, create new account
+      // Generate a random password for Google users
+      const randomPassword = Math.random().toString(36).slice(-8);
+      const hash_password = await bcrypt.hash(randomPassword, 10);
+
+      student = new Student({
+          name,
+          email,
+          hash_password,
+          isGoogleAccount: true
+      });
+
+      await student.save();
+
+      const token = jwt.sign({ _id: student._id }, process.env.JWT_SECRET, {
+          expiresIn: "1d",
+      });
+
+      const { hash_password: _, ...studentData } = student.toObject();
+      res.status(201).json({
+          token,
+          student: studentData,
+      });
+  } catch (error) {
+      console.error("Error during Google signin:", error);
+      res.status(500).json({ message: "Error during Google signin" });
+  }
+}
+
+
+module.exports = { signUp, signIn, googleSignIn };
