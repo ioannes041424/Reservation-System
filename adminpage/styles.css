@@ -91,20 +91,28 @@ body {
     flex-direction: column;
     background-color: var(--background-color);
     min-height: 100vh;
+    padding: 1.5rem;
     transition: all 0.3s ease;
     overflow-x: hidden;
+    position: relative;
 }
 
 .top-bar {
     background: var(--card-bg);
     padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
     z-index: 99;
+    margin-top: -1.5rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    border-radius: 0 0 12px 12px;
 }
 
 .page-title h1 {
@@ -171,8 +179,13 @@ body {
 
 /* Students Grid */
 .main-content {
-    padding: 2rem;
+    padding: 1.5rem;
+    flex: 1;
     overflow-y: auto;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    margin-top: 1.5rem;
 }
 
 .students-grid {

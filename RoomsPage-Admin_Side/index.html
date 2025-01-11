@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>Room Reservations - Admin</title>
+    <title>Admin - Room Management</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="../log-in-page/logo.png">
@@ -15,13 +15,13 @@
             <img src="../log-in-page/logo.png" alt="Logo">
         </div>
         <nav class="nav-links">
-            <a href="../adminpage/index.html">
+            <a href="../adminpage-dashboard/index.html">
                 <i class="fas fa-chart-line"></i> Dashboard
             </a>
             <a href="#" class="active">
                 <i class="fas fa-door-open"></i> Rooms
             </a>
-            <a href="../adminpage/index.html#users">
+            <a href="../adminpage/index.html">
                 <i class="fas fa-users"></i> Users
             </a>
         </nav>
@@ -30,11 +30,11 @@
     <div class="main-content-container">
         <div class="top-bar">
             <div class="page-title">
-                <h1>Room Reservations</h1>
+                <h1>Room Management</h1>
             </div>
             <div class="top-bar-actions">
                 <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Search reservations...">
+                    <input type="text" id="search-input" placeholder="Search...">
                     <i class="fas fa-search"></i>
                 </div>
                 <div class="user-profile">
@@ -44,8 +44,8 @@
         </div>
 
         <div class="main-content">
-            <div class="reservations-grid">
-                <!-- Reservations will be dynamically added here -->
+            <div class="rooms-container">
+                <!-- Rooms will be dynamically added here -->
             </div>
         </div>
     </div>

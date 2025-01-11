@@ -1,194 +1,190 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const reservationsGrid = document.querySelector('.reservations-grid');
-    
-    // Function to format date
-    function formatDate(dateString) {
-        const options = { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        };
-        return new Date(dateString).toLocaleDateString('en-US', options);
-    }
+// Function to format date and time
+function formatDateTime(dateTimeStr) {
+    if (!dateTimeStr) return '';
+    const date = new Date(dateTimeStr);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+}
 
-    // Sample reservation data matching the homepage form structure
-    const sampleReservations = [
-        {
-            id: '1',
-            room: 'Conference Room A',
-            mainParticipant: {
-                name: 'John Smith',
-                idNumber: '20230001',
-                course: 'Computer Science',
-                yearSection: '4A',
-                contact: '09123456789',
-                email: 'john.smith@email.com'
-            },
-            participantCount: 5,
-            date: '2024-01-02',
-            timeStart: '9:00 AM',
-            timeEnd: '11:00 AM',
-            purpose: 'Group Project Meeting',
-            status: 'Pending'
-        },
-        {
-            id: '2',
-            room: 'Conference Room B',
-            mainParticipant: {
-                name: 'Maria Garcia',
-                idNumber: '20230002',
-                course: 'Business Administration',
-                yearSection: '3B',
-                contact: '09187654321',
-                email: 'maria.garcia@email.com'
-            },
-            participantCount: 8,
-            date: '2024-01-02',
-            timeStart: '1:00 PM',
-            timeEnd: '3:00 PM',
-            purpose: 'Thesis Defense Preparation',
-            status: 'Approved'
-        },
-        {
-            id: '3',
-            room: 'Conference Room A',
-            mainParticipant: {
-                name: 'David Chen',
-                idNumber: '20230003',
-                course: 'Engineering',
-                yearSection: '4C',
-                contact: '09198765432',
-                email: 'david.chen@email.com'
-            },
-            participantCount: 6,
-            date: '2024-01-03',
-            timeStart: '10:00 AM',
-            timeEnd: '12:00 PM',
-            purpose: 'Research Presentation',
-            status: 'Pending'
-        }
-    ];
+// Function to format time
+function formatTime(timeStr) {
+    return timeStr || '';
+}
 
-    const cardsHTML = sampleReservations.map(reservation => `
-        <div class="reservation-card">
-            <div class="reservation-header">
+// Function to create a room card
+function createRoomCard(reservation) {
+    // Format participants list with better structure
+    const participantsList = reservation.participants && Array.isArray(reservation.participants)
+        ? reservation.participants.map(p => `
+            <div class="participant">
+                <div class="participant-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="participant-info">
+                    <div class="participant-name">${p.name}</div>
+                    <div class="participant-id">ID: ${p.id_number}</div>
+                </div>
+            </div>
+        `).join('')
+        : '<div class="no-participants">No participants listed</div>';
+
+    return `
+        <div class="room-card" data-id="${reservation._id}">
+            <div class="room-header">
                 <div class="room-icon">
                     <i class="fas fa-door-open"></i>
                 </div>
-                <div class="reservation-title">
-                    <h3>${reservation.room}</h3>
-                    <p>Reserved by: ${reservation.mainParticipant.name}</p>
+                <div class="room-info">
+                    <h3>${reservation.roomNumber || reservation.room}</h3>
+                    <div class="reservation-time">
+                        <i class="far fa-clock"></i>
+                        <span>${formatDateTime(reservation.date || reservation.reservationDate)}</span>
+                        <br>
+                        <span>${formatTime(reservation.startTime || reservation.timeStart)} - ${formatTime(reservation.endTime || reservation.timeEnd)}</span>
+                    </div>
                 </div>
             </div>
-            <div class="reservation-details">
+            <div class="room-details">
                 <div class="detail-item">
-                    <i class="fas fa-calendar"></i>
-                    <span>Date: ${new Date(reservation.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-clock"></i>
-                    <span>Time: ${reservation.timeStart} - ${reservation.timeEnd}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-users"></i>
-                    <span>Participants: ${reservation.participantCount}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-info-circle"></i>
-                    <span class="status-${reservation.status.toLowerCase()}">${reservation.status}</span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>${reservation.mainParticipant.course} - ${reservation.mainParticipant.yearSection}</span>
+                    <i class="fas fa-user"></i>
+                    <span>Reserved by: ${reservation.name}</span>
                 </div>
                 <div class="detail-item">
                     <i class="fas fa-envelope"></i>
-                    <span>${reservation.mainParticipant.email}</span>
+                    <span>${reservation.email || 'No email provided'}</span>
                 </div>
-            </div>
-            <div class="purpose-section">
                 <div class="detail-item">
                     <i class="fas fa-clipboard-list"></i>
-                    <span><strong>Purpose:</strong> ${reservation.purpose}</span>
+                    <span>Purpose: ${reservation.purpose || 'Not specified'}</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="status-${reservation.status || 'pending'}">Status: ${reservation.status || 'pending'}</span>
+                </div>
+                <div class="participants-section">
+                    <div class="participants-title">
+                        <div class="participants-header">
+                            <i class="fas fa-users"></i>
+                            <span>Participants</span>
+                            <span class="participants-count">${reservation.participantCount || (reservation.participants ? reservation.participants.length : 0)}</span>
+                        </div>
+                    </div>
+                    <div class="participants-list">
+                        ${participantsList}
+                    </div>
                 </div>
             </div>
-            <div class="reservation-actions">
-                <button class="action-btn view-btn" title="View Details" onclick="viewReservation('${reservation.id}')">
-                    <i class="fas fa-eye"></i>
-                </button>
-                ${reservation.status === 'Pending' ? `
-                    <button class="action-btn approve-btn" title="Approve Reservation" onclick="approveReservation('${reservation.id}')">
-                        <i class="fas fa-check"></i>
-                    </button>
-                    <button class="action-btn reject-btn" title="Reject Reservation" onclick="rejectReservation('${reservation.id}')">
-                        <i class="fas fa-times"></i>
-                    </button>
-                ` : ''}
-            </div>
         </div>
-    `).join('');
-    
-    reservationsGrid.innerHTML = cardsHTML;
-});
+    `;
+}
 
-// Search functionality
-document.getElementById('search-input')?.addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-    const cards = document.querySelectorAll('.reservation-card');
-    
-    cards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        card.style.display = text.includes(searchTerm) ? '' : 'none';
+// Function to load and display approved reservations
+async function loadApprovedReservations() {
+    const container = document.querySelector('.rooms-container');
+    if (!container) {
+        console.error('Rooms container not found');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3001/api/reservations');
+        if (!response.ok) {
+            throw new Error('Failed to fetch reservations');
+        }
+
+        const data = await response.json();
+        const reservations = Array.isArray(data) ? data : (data.data || []);
+        const approvedReservations = reservations.filter(res => res.status === 'approved');
+
+        if (approvedReservations.length === 0) {
+            container.innerHTML = `
+                <div class="no-reservations">
+                    <i class="fas fa-calendar-times"></i>
+                    <p>No approved reservations found</p>
+                </div>`;
+            return;
+        }
+
+        // Sort reservations by date and time
+        approvedReservations.sort((a, b) => {
+            const dateA = new Date(a.date || a.reservationDate);
+            const dateB = new Date(b.date || b.reservationDate);
+            return dateA - dateB;
+        });
+
+        container.innerHTML = approvedReservations.map(reservation => 
+            createRoomCard(reservation)
+        ).join('');
+
+    } catch (error) {
+        console.error('Error loading reservations:', error);
+        container.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Failed to load reservations. Please try again later.</p>
+                <small>${error.message}</small>
+            </div>`;
+    }
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
     });
+}
+
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll('.room-card');
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+        });
+    });
+}
+
+// Start polling for updates
+let pollInterval;
+
+function startPolling() {
+    // Poll every 30 seconds
+    pollInterval = setInterval(loadApprovedReservations, 30000);
+}
+
+function stopPolling() {
+    if (pollInterval) {
+        clearInterval(pollInterval);
+    }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadApprovedReservations();
+    setupSearch();
+    startPolling();
 });
 
-// Reservation actions
-function viewReservation(id) {
-    const reservation = document.querySelector(`[onclick="viewReservation('${id}')"]`)
-        .closest('.reservation-card');
-    alert('Viewing full details for reservation: ' + id);
-}
-
-function approveReservation(id) {
-    console.log('Approving reservation:', id);
-    alert('Reservation ' + id + ' has been approved');
-    // Commented out fetch call
-    /*
-    fetch(`http://localhost:3001/api/reservations/${id}/approve`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Reservation approved:', data);
-        location.reload();
-    })
-    .catch(error => console.error('Error approving reservation:', error));
-    */
-    location.reload();
-}
-
-function rejectReservation(id) {
-    console.log('Rejecting reservation:', id);
-    alert('Reservation ' + id + ' has been rejected');
-    // Commented out fetch call
-    /*
-    fetch(`http://localhost:3001/api/reservations/${id}/reject`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Reservation rejected:', data);
-        location.reload();
-    })
-    .catch(error => console.error('Error rejecting reservation:', error));
-    */
-    location.reload();
-} 
+// Handle page visibility
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopPolling();
+    } else {
+        loadApprovedReservations();
+        startPolling();
+    }
+}); 

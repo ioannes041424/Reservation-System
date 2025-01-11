@@ -24,6 +24,6 @@ const isRequestValidated = (req, res, next) => {
 
 module.exports = {
   validateSignUpRequest,
-  validateSignInRequest, // Corrected the function name here
+  validateSignInRequest, 
   isRequestValidated,
 };

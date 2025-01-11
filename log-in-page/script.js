@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check if admin login is active
     if (isAdminLogin) {
-        if (identifier === 'admin' && password === 'admin') {
+        if (identifier === 'admin' && password === 'admin123') {
             successMessage.textContent = 'Admin login successful! Redirecting...';
             successMessage.style.display = 'block';
             errorDiv.style.display = 'none';
             setTimeout(() => {
-                window.location.href = '../adminpage/index.html'; // Redirect to homepage
+                window.location.href = '../adminpage-dashboard/index.html'; // Redirect to homepage
             }, 1500);
             return;
         } else {

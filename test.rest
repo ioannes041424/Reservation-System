@@ -1,0 +1,103 @@
+### Variables
+@baseUrl = http://localhost:3001
+@reservationId = 6782036fc4b5ba5e4b458bd2
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzgyMDM2ZmM0YjViYTVlNGI0NThiZDIiLCJpYXQiOjE3MzY1NzM4NDIsImV4cCI6MTczOTE2NTg0Mn0.iEisw9K0GavUROdn5T83pRcJQEX6on2ud5uNch9VASs
+
+### Authentication Endpoints
+
+### Sign Up
+POST {{baseUrl}}/api/signup
+Content-Type: application/json
+
+{
+    "name": "Test User",
+    "email": "testuser@example.com",
+    "password": "password123"
+}
+
+### Sign In
+POST {{baseUrl}}/api/signin
+Content-Type: application/json
+
+{
+    "email": "testuser@example.com",
+    "password": "password123"
+}
+
+### Google Sign In
+POST {{baseUrl}}/api/google-signin
+Content-Type: application/json
+
+{
+    "token": "your_google_token_here"
+}
+
+### Reservation Endpoints
+
+### Create a new reservation
+POST {{baseUrl}}/api/reservations
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "John Doe",
+    "id_number": "2023-1234",
+    "course": "Computer Science",
+    "yearSection": "4-A",
+    "contact": "1234567890",
+    "email": "john.doe@example.com",
+    "participantCount": 5,
+    "participants": [
+        {
+            "name": "Participant 1",
+            "id_number": "2023-1235"
+        },
+        {
+            "name": "Participant 2",
+            "id_number": "2023-1236"
+        }
+    ],
+    "room": "Conference Room B",
+    "reservationDate": "2024-01-20",
+    "timeStart": "10:00",
+    "timeEnd": "12:00",
+    "purpose": "Group Study"
+}
+
+### Get all reservations
+GET {{baseUrl}}/api/reservations
+Authorization: Bearer {{token}}
+
+### Get all reservations
+GET {{baseUrl}}/api/students
+Authorization: Bearer {{token}}
+
+### Get reservations with status filter (pending/approved/rejected)
+GET {{baseUrl}}/api/reservations?status=pending
+Authorization: Bearer {{token}}
+
+### Get reservations by specific date
+GET {{baseUrl}}/api/reservations?date=2024-01-20
+Authorization: Bearer {{token}}
+
+### Check room availability
+GET {{baseUrl}}/api/reservations/check-availability?room=Room 101&reservationDate=2024-01-20&timeStart=10:00&timeEnd=12:00
+Authorization: Bearer {{token}}
+
+### Update reservation status (Approve)
+PATCH {{baseUrl}}/api/reservations/{{reservationId}}/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "status": "approved"
+}
+
+### Update reservation status (Reject)
+PATCH {{baseUrl}}/api/reservations/{{reservationId}}/status
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "status": "rejected"
+}
