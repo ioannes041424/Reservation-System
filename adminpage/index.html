@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="../log-in-page/logo.png">
+</head>
+<body>
+    
+    <div class="hamburger-menu">
+        <div class="hamburger-icon" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="left-panel mobile-menu">
+        <div class="logo">
+            <img src="../log-in-page/logo.png" alt="Logo">
+        </div>
+        <nav class="nav-links">
+            <a href="#dashboard" onclick="closeMobileMenu()">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+            <a href="#rooms" onclick="closeMobileMenu()">
+                <i class="fas fa-door-open"></i> Rooms
+            </a>
+            <a href="#users" onclick="closeMobileMenu()">
+                <i class="fas fa-users"></i> Users
+            </a>
+           
+        </nav>
+    </div>
+
+    <div class="main-content-container">
+        <div class="top-bar">
+            <div class="page-title">
+                <h1>Registered Students</h1>
+            </div>
+            <div class="top-bar-actions">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                  
+                </div>
+                <div class="message-icon">
+                    <i class="fas fa-envelope"></i>
+                    
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-user"></i>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-actions">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Search students...">
+                    <button class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="filter-container">
+                    <select id="filter-select">
+                        <option value="">Filter by</option>
+                        <option value="name">Name</option>
+                        <option value="id">Student ID</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
