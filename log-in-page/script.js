@@ -6,7 +6,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstati
 // Kini ang configuration sa Firebase. Importante ni nga information para ma-connect
 // ang atong application sa Firebase project
 const firebaseConfig = {
-    apiKey: "AIzaSyBedLr4v6xdXWydp3mg44XGxNVzlpebJk4",
+    apiKey: "API-KEY-HERE",
     authDomain: "reservation-system-login.firebaseapp.com",
     projectId: "reservation-system-login",
     storageBucket: "reservation-system-login.firebasestorage.app",
