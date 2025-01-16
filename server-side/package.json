@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon src/index.js"
   },
-  "author": "John Paul Cu",
+  "author": "John Paul Tayong",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
