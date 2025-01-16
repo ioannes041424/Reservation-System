@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check if admin login is active
     if (isAdminLogin) {
-        if (identifier === 'admin' && password === 'admin') {
+        if (identifier === 'admin' && password === 'admin123') {
             successMessage.textContent = 'Admin login successful! Redirecting...';
             successMessage.style.display = 'block';
             errorDiv.style.display = 'none';
             setTimeout(() => {
-                window.location.href = '../adminpage/index.html'; // Redirect to homepage
+                window.location.href = '../adminpage-dashboard/index.html'; // Redirect to homepage
             }, 1500);
             return;
         } else {
@@ -158,7 +158,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
 
-                // I-save ang user data sa localStorage kung kinahanglan
+                // Send user data to our backend
+                const response = await fetch("http://localhost:3001/api/google-signin", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: user.displayName,
+                        email: user.email
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to authenticate with backend');
+                }
+
+                const data = await response.json();
+
+                // Store the token and user data
+                localStorage.setItem('token', data.token);
                 localStorage.setItem('googleUser', JSON.stringify({
                     name: user.displayName,
                     email: user.email,
@@ -167,19 +186,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Ipakita ang success message
                 const successMessage = document.querySelector('#login-form .success-message');
+                const errorDiv = document.querySelector('#login-form .error-message');
                 successMessage.textContent = 'Google login successful! Redirecting...';
                 successMessage.style.display = 'block';
+                errorDiv.style.display = 'none';
 
                 // I-redirect human sa successful login
                 setTimeout(() => {
-                    window.location.href = '../homepage/index.html'; // Redirect to homepage
+                    window.location.href = '../homepage/index.html';
                 }, 1500);
 
             } catch (error) {
                 console.error('Error during Google sign-in:', error);
                 const errorDiv = document.querySelector('#login-form .error-message');
+                const successMessage = document.querySelector('#login-form .success-message');
                 errorDiv.textContent = 'Failed to login with Google';
                 errorDiv.style.display = 'block';
+                successMessage.style.display = 'none';
             }
         });
     }

@@ -1,0 +1,227 @@
+/* Define color scheme and font styles using CSS variables */
+:root {
+  --primary-color: #800000;
+  --secondary-color: #b22222;
+  --accent-color: #d3d3d3;
+  --text-color: #ffffff;
+  --background-color: #ffffff;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+  --status-pending: #f0ad4e;
+  --status-approved: #28a745;
+  --status-rejected: #dc3545;
+}
+
+/* General Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: #333333;
+}
+
+/* Header Styles */
+header {
+  background: var(--primary-color);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 100px;
+}
+
+.logo img {
+  height: 90px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  margin-left: 2rem;
+}
+
+nav ul li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Main Content Styles */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.main-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.main-content h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.welcome-message {
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  font-size: 1.1rem;
+}
+
+/* Rooms Container Styles */
+.rooms-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.room-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.room-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.room-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--primary-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-icon i {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.room-info h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.room-details {
+  margin-top: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.detail-item i {
+  color: var(--primary-color);
+  width: 20px;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-pending {
+  background-color: var(--status-pending);
+  color: white;
+}
+
+.status-approved {
+  background-color: var(--status-approved);
+  color: white;
+}
+
+.status-rejected {
+  background-color: var(--status-rejected);
+  color: white;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  nav ul {
+    gap: 1rem;
+  }
+
+  .page-wrapper {
+    padding: 1rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .main-content h1 {
+    font-size: 2rem;
+  }
+
+  .rooms-container {
+    grid-template-columns: 1fr;
+  }
+}
